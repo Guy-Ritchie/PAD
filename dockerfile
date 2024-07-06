@@ -18,11 +18,11 @@ RUN DEBIAN_FRONTEND=noninteractive npm install --global --force yarn
 # Switch to `rinzler` user
 USER rinzler
 WORKDIR /home/rinzler
-RUN DEBIAN_FRONTEND=noninteractive curl -L -o .vim/hotkeys https://raw.githubusercontent.com/Guy-Ritchie/PAD/main/.vimrc-hotkeys
-RUN DEBIAN_FRONTEND=noninteractive curl -L -o .vimrc https://raw.githubusercontent.com/Guy-Ritchie/PAD/main/.vimrc
+RUN DEBIAN_FRONTEND=noninteractive zsh -c "$(curl -L -o .vim/hotkeys https://raw.githubusercontent.com/Guy-Ritchie/PAD/main/.vimrc-hotkeys)" --unattended
+RUN DEBIAN_FRONTEND=noninteractive zsh -c "$(curl -L -o .vimrc https://raw.githubusercontent.com/Guy-Ritchie/PAD/main/.vimrc)" --unattended
 
 RUN DEBIAN_FRONTEND=noninteractive zsh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
-RUN DEBIAN_FRONTEND=noninteractive git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN DEBIAN_FRONTEND=noninteractive zsh -c "$(git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions)" --unattended
 
 # EXPOSE Port(s) (8888) to access services run inside container
 EXPOSE 8888
