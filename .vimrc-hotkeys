@@ -1,0 +1,10 @@
+# Hotkeys, file to look at hotkeys and their functions
+
+HotKeys:
+
+SPACE - t             : Toggle NERDTree.
+SPACE - SPACE - c     : Comment/Uncomment a line (or a selected code block).
+SPACE - TAB           : Switch to newer file opened.
+SPACE - SPACE - TAB   : Switch back to previously open file.
+SPACE - SPACE - f     : Open Fuzzy Finder (powered by ripgrep) to search and open files.
+SPACE - SPACE - p     : Format document with Prettier formatter.
