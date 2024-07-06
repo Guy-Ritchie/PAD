@@ -22,6 +22,7 @@ RUN DEBIAN_FRONTEND=noninteractive curl -L -o .vim/hotkeys https://raw.githubuse
 RUN DEBIAN_FRONTEND=noninteractive curl -L -o .vimrc https://raw.githubusercontent.com/Guy-Ritchie/PAD/main/.vimrc
 
 RUN DEBIAN_FRONTEND=noninteractive zsh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+RUN DEBIAN_FRONTEND=noninteractive git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # EXPOSE Port(s) (8888) to access services run inside container
 EXPOSE 8888
