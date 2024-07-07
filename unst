@@ -19,4 +19,4 @@ RUN conda install pillow -y
 RUN conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia -y
 RUN pip install langchain_community unstructured['pdf'] -y
 
-CMD["bash"]
+#CMD["bash"]
