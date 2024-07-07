@@ -1,6 +1,6 @@
 FROM python:3.9-bookworm
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes vim curl wget libmagic-dev popper-utils pandoc tesseract-ocr libtesseract-dev libgl1 libgl1-mesa-dev python3-opencv sudo && apt-get clean
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes vim curl wget libmagic-dev poppler-utils pandoc tesseract-ocr libtesseract-dev libgl1 libgl1-mesa-dev python3-opencv sudo && apt-get clean
 RUN DEBIAN_FRONTEND=noninteractive apt-get install libreoffice && apt-get clean
 RUN useradd -m -s /bin/bash -G sudo dev && echo 'dev:d' | chpasswd
 USER dev
