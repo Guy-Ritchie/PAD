@@ -1,0 +1,22 @@
+FROM python:3.9-bookworm
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes vim curl wget libmagic-dev popper-utils pandoc tesseract-ocr libtesseract-dev libgl1 libgl1-mesa-dev python3-opencv sudo && apt-get clean
+RUN DEBIAN_FRONTEND=noninteractive apt-get install libreoffice && apt-get clean
+RUN useradd -m -s /bin/bash -G sudo dev && echo 'dev:d' | chpasswd
+USER dev
+WORKDIR /home/dev/
+RUN mkdir -p /home/dev/miniconda3/
+
+# Install miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && bash miniconda.sh -b -u -p /home/dev/miniconda3 && rm miniconda.sh
+ENV PATH="$HOME/miniconda3/bin:$PATH"
+RUN echo 'PATH="/home/dev/miniconda3/bin:$PATH"' >> ~/.bashrc
+RUN conda create -n unstructured python=3.9 -y
+RUN source activate unstructured
+# Installing pillow - image rel working python package
+RUN conda install pillow -y
+# Installing torch, following steps from official torch docs
+RUN conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia -y
+RUN pip install langchain_community unstructured['pdf'] -y
+
+CMD["bash"]
