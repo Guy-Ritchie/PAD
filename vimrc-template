@@ -234,6 +234,9 @@ augroup END
 " Clear search highlighting
 nnoremap <silent> <leader>/ :nohlsearch<CR>
 
+" Open hotkeys reference file
+nnoremap <silent> <leader>h :vsplit ~/.vim/hotkeys<CR>
+
 " Auto-clear search highlight when entering insert mode
 augroup highlight_search
   autocmd!
