@@ -1,0 +1,149 @@
+" ============================================================================
+" VIM HOTKEYS REFERENCE
+" ============================================================================
+" Leader key: SPACE
+" Open this file anytime with: vim ~/.vim/hotkeys
+"
+" Format: <keys> → Description
+" ============================================================================
+
+" ============================================================================
+" FUZZY FINDER (FZF)
+" ============================================================================
+" Space + p     → Files (fuzzy find files by name)
+" Space + b     → Buffers (switch between open files/buffers)
+" Space + f     → Rg (ripgrep - search file contents)
+
+" ============================================================================
+" FILE EXPLORER (NERDTREE)
+" ============================================================================
+" Space + t     → NERDTree Toggle (show/hide file tree on left)
+" Space + e     → NERDTree Focus (focus on tree panel)
+"
+" Inside NERDTree:
+"   o           → Open file/folder
+"   s           → Open file in vertical split
+"   i           → Open file in horizontal split
+"   t           → Open in new tab
+"   m           → Show menu (create, delete, rename, etc.)
+
+" ============================================================================
+" SYMBOL NAVIGATOR (VISTA)
+" ============================================================================
+" Space + .     → Vista Toggle (show/hide symbols sidebar)
+" Space + m     → Vista Finder (fuzzy search symbols in current file)
+"
+" Inside Vista:
+"   Enter       → Jump to symbol
+"   o           → Jump to symbol
+"   q           → Close Vista
+
+" ============================================================================
+" BUFFER NAVIGATION
+" ============================================================================
+" Space + Tab       → Next buffer (move to next open file)
+" Space + Tab + Tab → Previous buffer (move to previous open file)
+" :bd              → Close current buffer
+
+" ============================================================================
+" COMMENTS (NERDCOMMENTER)
+" ============================================================================
+" Space + Space + c → Toggle comment (normal mode or visual selection)
+" Works for any language (auto-detects syntax)
+
+" ============================================================================
+" TEXT WRAPPING
+" ============================================================================
+" Space + z         → Enable wrap (wrap long lines)
+" Space + Space + z → Disable wrap (no line wrapping)
+
+" ============================================================================
+" GIT INTEGRATION (VIM-FUGITIVE + VIM-GITGUTTER)
+" ============================================================================
+" Space + g + s → Git status (:Git command)
+" Space + g + d → Git diff (show changes in current file)
+" Space + g + l → Git log (current branch, one commit per line)
+" Space + g + g → Git graph (all branches, visual tree, last 20 commits)
+" Space + g + b → Git branches (list branches, switch with :Git switch <name>)
+"
+" ] + c         → Jump to next git hunk (next change)
+" [ + c         → Jump to previous git hunk (previous change)
+"
+" Git Hunk Actions (in diff view):
+"   d           → Discard hunk
+"   s           → Stage hunk
+"   u           → Undo staged hunk
+
+" ============================================================================
+" LANGUAGE SERVER PROTOCOL (VIM-LSP)
+" ============================================================================
+" These work on any language with LSP configured (Python, JS, etc.)
+"
+" g + d         → Go to definition (jump to where symbol is defined)
+" K             → Hover (show type info, documentation, signature)
+" g + r         → Find references (show all usages of symbol)
+" Space + r + n → Rename symbol (rename across entire project)
+" Space + c + a → Code actions (auto-fix, refactor suggestions)
+" ] + e         → Next diagnostic (jump to next error/warning)
+" [ + e         → Previous diagnostic (jump to previous error/warning)
+
+" ============================================================================
+" GENERAL NAVIGATION
+" ============================================================================
+" Space + /     → Clear search highlights (stop highlighting search matches)
+"
+" h, j, k, l    → Move cursor (left, down, up, right)
+" w             → Jump to next word
+" b             → Jump to previous word
+" $             → Jump to end of line
+" ^             → Jump to start of line
+" G             → Jump to end of file
+" gg            → Jump to start of file
+" Ctrl + f      → Page down
+" Ctrl + b      → Page up
+" /             → Search (type pattern, press Enter)
+" n             → Next search result
+" N             → Previous search result
+
+" ============================================================================
+" INSERT MODE COMPLETIONS
+" ============================================================================
+" Tab           → Next completion suggestion (if available)
+" Shift + Tab   → Previous completion suggestion
+" Ctrl + x + o  → Omnifunction completion (LSP-based)
+
+" ============================================================================
+" COMMON VIM COMMANDS
+" ============================================================================
+" :w            → Save file
+" :q            → Quit vim
+" :wq           → Save and quit
+" :q!           → Quit without saving
+" :e <file>     → Open file
+" :split <file> → Open file in horizontal split
+" :vsplit <file>→ Open file in vertical split
+" :tabnew       → Open new tab
+" Ctrl + w + w  → Switch between splits
+" Ctrl + w + h/j/k/l → Move to split (left/down/up/right)
+
+" ============================================================================
+" EDITING OPERATIONS
+" ============================================================================
+" i             → Insert mode (before cursor)
+" a             → Append mode (after cursor)
+" I             → Insert at start of line
+" A             → Append at end of line
+" o             → Create new line below
+" O             → Create new line above
+" x             → Delete character
+" dd            → Delete line
+" d + w         → Delete word
+" y             → Yank (copy)
+" p             → Paste after cursor
+" P             → Paste before cursor
+" u             → Undo
+" Ctrl + r      → Redo
+" .             → Repeat last command
+" v             → Visual mode (select text)
+" V             → Visual line mode (select lines)
+" Ctrl + v      → Visual block mode (select blocks)
