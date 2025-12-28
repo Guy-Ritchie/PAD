@@ -117,6 +117,9 @@ let g:lsp_virtual_text_enabled = 0
 " Highlight LSP diagnostics
 highlight lspReference ctermfg=yellow ctermbg=darkgray guifg=yellow guibg=darkgray
 
+" Disable LSP reference highlighting (if too noisy)
+" let g:lsp_highlight_references_enabled = 0
+
 " ============================================================================
 " VISTA.VIM CONFIGURATION
 " ============================================================================
@@ -160,12 +163,14 @@ nnoremap <silent> <leader>m :Vista finder<CR>
 " ============================================================================
 nnoremap <silent> <leader><Tab> :bnext<CR>
 nnoremap <silent> <leader><Tab><Tab> :bprevious<CR>
+nnoremap <silent> <leader>n :enew<CR>
 
 " ============================================================================
 " KEYBINDINGS - COMMENTS (NERDCOMMENTER)
 " ============================================================================
-nnoremap <silent> <leader><leader>c <Plug>NERDCommenterToggle
-vnoremap <silent> <leader><leader>c <Plug>NERDCommenterToggle
+" Use NERDCommenter's toggle function
+nmap <leader><leader>c <Plug>NERDCommenterToggle
+vmap <leader><leader>c <Plug>NERDCommenterToggle
 
 " ============================================================================
 " KEYBINDINGS - TEXT WRAPPING
@@ -237,12 +242,8 @@ nnoremap <silent> <leader>/ :nohlsearch<CR>
 " Open hotkeys reference file
 nnoremap <silent> <leader>h :vsplit ~/.vim/hotkeys<CR>
 
-" Auto-clear search highlight when entering insert mode
-augroup highlight_search
-  autocmd!
-  autocmd InsertEnter * set nohlsearch
-  autocmd InsertLeave * set hlsearch
-augroup END
+" Auto-set hotkeys as read-only
+autocmd BufRead ~/.vim/hotkeys set readonly nomodifiable
 
 " ============================================================================
 " LSP COMPLETION SETUP (Simple, Lightweight)
