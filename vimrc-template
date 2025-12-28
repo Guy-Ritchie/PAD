@@ -1,0 +1,250 @@
+" ============================================================================
+" BASE VIMRC - Minimal, Clean, LSP-Ready
+" ============================================================================
+
+" ============================================================================
+" CORE SETTINGS
+" ============================================================================
+set nocompatible
+filetype off
+syntax on
+filetype plugin indent on
+
+" Line numbers and visual settings
+set number
+set cursorline
+set wrap
+set colorcolumn=120
+
+" Indentation
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set smartindent
+
+" Search and navigation
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+" Display and behavior
+set laststatus=2
+set wildmenu
+set scrolloff=7
+set t_Co=256
+set termguicolors
+
+" Preserve last editing position
+source $VIMRUNTIME/vimrc_example.vim
+
+" ============================================================================
+" VIM-PLUG PLUGIN MANAGER
+" ============================================================================
+call plug#begin('~/.vim/plugged')
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" File and project explorer
+Plug 'preservim/nerdtree'
+
+" Commenting
+Plug 'preservim/nerdcommenter'
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" LSP and completion
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+" Symbol navigator (uses vim-lsp backend)
+Plug 'liuchengxu/vista.vim'
+
+" Git integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Colorscheme
+Plug 'joshdick/onedark.vim'
+Plug 'tomasr/molokai'
+
+call plug#end()
+
+" ============================================================================
+" COLORSCHEME AND APPEARANCE
+" ============================================================================
+colorscheme onedark
+" Uncomment to use molokai instead:
+" colorscheme molokai
+
+" Make background transparent (optional)
+hi Normal guibg=NONE ctermbg=NONE
+hi NormalNC guibg=NONE ctermbg=NONE
+hi FloatBorder guibg=NONE
+hi NormalFloat guibg=NONE
+
+" ============================================================================
+" VIM-AIRLINE CONFIGURATION
+" ============================================================================
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'onedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#branch#enabled = 1
+
+" ============================================================================
+" FZF CONFIGURATION
+" ============================================================================
+" Use ripgrep as default FZF command (files, hidden, follow symlinks, ignore .git)
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs'
+
+" ============================================================================
+" VIM-LSP CONFIGURATION
+" ============================================================================
+" Let vim-lsp-settings auto-configure language servers
+let g:lsp_settings_servers_dir = expand('~/.vim/lsp_servers')
+
+" Disable diagnostics signs in the gutter (gitgutter has this covered)
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_signs_enabled = 1
+let g:lsp_virtual_text_enabled = 0
+
+" Highlight LSP diagnostics
+highlight lspReference ctermfg=yellow ctermbg=darkgray guifg=yellow guibg=darkgray
+
+" ============================================================================
+" VISTA.VIM CONFIGURATION
+" ============================================================================
+let g:vista_default_executive = 'vim_lsp'
+let g:vista_sidebar_width = 35
+let g:vista_fzf_preview = ['right:50%']
+
+" ============================================================================
+" NERDCOMMENTER CONFIGURATION
+" ============================================================================
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+
+" ============================================================================
+" LEADER KEY
+" ============================================================================
+let mapleader = ' '
+let maplocalleader = ' '
+
+" ============================================================================
+" KEYBINDINGS - FUZZY FINDER (FZF)
+" ============================================================================
+nnoremap <silent> <leader>p :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>f :Rg<CR>
+
+" ============================================================================
+" KEYBINDINGS - FILE EXPLORER (NERDTREE)
+" ============================================================================
+nnoremap <silent> <leader>t :NERDTreeToggle<CR>
+nnoremap <silent> <leader>e :NERDTreeFocus<CR>
+
+" ============================================================================
+" KEYBINDINGS - SYMBOL NAVIGATOR (VISTA)
+" ============================================================================
+nnoremap <silent> <leader>. :Vista!!<CR>
+nnoremap <silent> <leader>m :Vista finder<CR>
+
+" ============================================================================
+" KEYBINDINGS - BUFFER NAVIGATION
+" ============================================================================
+nnoremap <silent> <leader><Tab> :bnext<CR>
+nnoremap <silent> <leader><Tab><Tab> :bprevious<CR>
+
+" ============================================================================
+" KEYBINDINGS - COMMENTS (NERDCOMMENTER)
+" ============================================================================
+nnoremap <silent> <leader><leader>c <Plug>NERDCommenterToggle
+vnoremap <silent> <leader><leader>c <Plug>NERDCommenterToggle
+
+" ============================================================================
+" KEYBINDINGS - TEXT WRAPPING
+" ============================================================================
+nnoremap <silent> <leader>z :set wrap<CR>
+nnoremap <silent> <leader><leader>z :set nowrap<CR>
+
+" ============================================================================
+" KEYBINDINGS - GIT INTEGRATION (VIM-FUGITIVE)
+" ============================================================================
+" Git status
+nnoremap <silent> <leader>gs :Git<CR>
+
+" Git diff for current file
+nnoremap <silent> <leader>gd :Gdiff<CR>
+
+" Git log (current branch, oneline)
+nnoremap <silent> <leader>gl :Git log --oneline<CR>
+
+" Git log (all branches, graph view, last 80 commits)
+nnoremap <silent> <leader>gg :Git log --all --graph --oneline -20<CR>
+
+" Git branch list and switch
+nnoremap <silent> <leader>gb :Git branch<CR>
+
+" Jump between hunks (with gitgutter)
+nnoremap <silent> ]c <Plug>(GitGutterNextHunk)
+nnoremap <silent> [c <Plug>(GitGutterPrevHunk)
+
+" ============================================================================
+" KEYBINDINGS - VIM-LSP
+" ============================================================================
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  
+  " Go to definition
+  nnoremap <buffer> <silent> gd :LspDefinition<CR>
+  
+  " Hover (show type info)
+  nnoremap <buffer> <silent> K :LspHover<CR>
+  
+  " Find references
+  nnoremap <buffer> <silent> gr :LspReferences<CR>
+  
+  " Rename symbol
+  nnoremap <buffer> <silent> <leader>rn :LspRename<CR>
+  
+  " Show code actions
+  nnoremap <buffer> <silent> <leader>ca :LspCodeAction<CR>
+  
+  " Go to next diagnostic
+  nnoremap <buffer> <silent> ]e :LspNextDiagnostic<CR>
+  
+  " Go to previous diagnostic
+  nnoremap <buffer> <silent> [e :LspPrevDiagnostic<CR>
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" ============================================================================
+" KEYBINDINGS - GENERAL
+" ============================================================================
+" Clear search highlighting
+nnoremap <silent> <leader>/ :nohlsearch<CR>
+
+" Auto-clear search highlight when entering insert mode
+augroup highlight_search
+  autocmd!
+  autocmd InsertEnter * set nohlsearch
+  autocmd InsertLeave * set hlsearch
+augroup END
+
+" ============================================================================
+" LSP COMPLETION SETUP (Simple, Lightweight)
+" ============================================================================
+" Use <C-x><C-o> for omnifunc completion in insert mode
+" Or use this for tab-based completion:
+inoremap <buffer> <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <buffer> <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
