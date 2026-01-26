@@ -70,9 +70,41 @@ function deactivate_venv() {
   fi
 }
 
+# Starts up a tmux session; and runs whatever commands we need, with as many panes we need!
+proj-bg() {
+  local BASE_DIR="/home/rinzler/docs/work_upstream/project_base_path"
+  local SESSION="proj"
+
+  # Don't start twice
+  if tmux has-session -t "$SESSION" 2>/dev/null; then
+    echo "proj already running in background (tmux session: $SESSION)"
+    return
+  fi
+
+  # Create detached session
+  tmux new-session -d -s "$SESSION" -c "$BASE_DIR/sor-ui"
+
+  # proj-ui
+  tmux send-keys -t "$SESSION":0.0 "npm run start" C-m
+
+  # proj-queue
+  tmux split-window -h -t "$SESSION" -c "$BASE_DIR/proj-queue"
+  tmux send-keys -t "$SESSION":0.1 "source .venv/bin/activate && uv run server.py" C-m
+
+  # proj-service
+  tmux split-window -v -t "$SESSION":0.1 -c "$BASE_DIR/proj-service"
+  tmux send-keys -t "$SESSION":0.2 "source .venv/bin/activate && uv run server.py" C-m
+
+  # Optional: compact layout (even though you won't see it)
+  tmux select-layout -t "$SESSION" tiled
+
+  echo "proj services started in background (tmux session: $SESSION)"
+}
+
 # Aliases
 alias sjl="start_jupyter_lab"
 alias cav="create_and_activate_venv"
 alias av="activate_venv"
 alias dv="deactivate_venv"
+alias proj="proj-bg" # just for reference!
 
